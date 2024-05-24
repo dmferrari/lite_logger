@@ -2,6 +2,10 @@
 
 LiteLogger is a lightweight logging solution for Ruby on Rails applications. It provides customizable log levels, formats, and destinations.
 
+## Status
+
+[![Gem Version](https://badge.fury.io/rb/lite_logger.svg)](https://badge.fury.io/rb/lite_logger)
+
 ## Installation
 
 Add this line to your application's Gemfile:
