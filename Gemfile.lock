@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lite_logger (0.1.0)
+    lite_logger (0.1.1)
       rake (~> 13.0)
       rspec (~> 3.0)
       rubocop (~> 1.21)
@@ -73,4 +73,4 @@ DEPENDENCIES
   ruby-lsp (~> 0.16.6)
 
 BUNDLED WITH
-   2.5.9
+   2.5.10
