@@ -1,0 +1,34 @@
+module LiteLogger
+  VERSION: String
+
+  class Error < StandardError
+  end
+
+  class << self
+    attr_accessor logger: LiteLogger::Logger
+
+    def configure: () { (LiteLogger::Logger) -> void } -> void
+  end
+end
+
+module LiteLogger
+  class Logger
+    LEVELS: { debug: Integer, info: Integer, warn: Integer, error: Integer, fatal: Integer }
+
+    attr_accessor level: Symbol
+    attr_accessor format: Symbol
+    attr_accessor destination: (IO | String)
+
+    def initialize: () -> void
+
+    def debug: (String) -> void
+    def info: (String) -> void
+    def warn: (String) -> void
+    def error: (String) -> void
+    def fatal: (String) -> void
+
+    private def log: (Symbol, String) -> void
+    private def format_message: (Symbol, String) -> String
+    private def write_log: (String) -> void
+  end
+end
