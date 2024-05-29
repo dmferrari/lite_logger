@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lite_logger (0.1.1)
+    lite_logger (0.1.2)
       rake (~> 13.0)
       rspec (~> 3.0)
       rubocop (~> 1.21)
