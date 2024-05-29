@@ -1,6 +1,6 @@
 # LiteLogger
 
-LiteLogger is a lightweight logging solution for Ruby on Rails applications. It provides customizable log levels, formats, and destinations.
+LiteLogger is a lightweight logging solution for Ruby applications, providing customizable log levels, formats, and destinations.
 
 ## Status
 
@@ -14,13 +14,13 @@ Add this line to your application's Gemfile:
 gem 'lite_logger'
 ```
 
-And then execute:
+And then run:
 
 ```bash
 bundle install
 ```
 
-Or install it yourself as:
+Or install it manually with:
 
 ```bash
 gem install lite_logger
@@ -28,36 +28,37 @@ gem install lite_logger
 
 ## Usage
 
-### Configuration
+### Example
 
-You can configure LiteLogger in an initializer file. For example, create a file named `config/initializers/lite_logger.rb` with the following content:
+In a Ruby class:
 
 ```ruby
-# config/initializers/lite_logger.rb
-LiteLogger.configure do |config|
-  config.level = :debug
-  config.format = :json
-  config.destination = Rails.root.join('log', 'lite_logger.log')
+# Require the gem
+require 'lite_logger'
+
+class MyClass
+  def initialize
+    # Initialize the logger
+    @logger = LiteLogger.new
+  end
+
+  def run
+    @logger.debug('This is a debug message')
+    @logger.info('This is an info message')
+    @logger.warn('This is a warning message')
+    @logger.error('This is an error message')
+    @logger.fatal('This is a fatal message')
+
+    # Method logic here
+  end
 end
-```
-
-### Logging
-
-Use the `LiteLogger` module to log messages in your application:
-
-```ruby
-LiteLogger.debug('This is a debug message')
-LiteLogger.info('This is an info message')
-LiteLogger.warn('This is a warning message')
-LiteLogger.error('This is an error message')
-LiteLogger.fatal('This is a fatal message')
 ```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at <https://github.com/dmferrari/lite_logger>.
+Bug reports and pull requests are welcome: <https://github.com/dmferrari/lite_logger/pulls>.
 
 ## License
 
 License
-This gem is available as open-source under the terms of the MIT License (see the LICENSE file in the project root for details).
+This little gem is available as open-source under the terms of the MIT License (see the LICENSE file in the project root for details).
