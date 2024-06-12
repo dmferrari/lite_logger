@@ -18,3 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated README.md with installation instructions and usage example.
 - Updated .gitignore file to avoid pushing development support files.
+
+## [0.1.3] - 2024-06-12
+
+- Added missing log/ directory that was causing the specs to fail.
