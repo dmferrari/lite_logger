@@ -17,3 +17,6 @@
 
 # Development support files
 all_changes.txt
+
+# Keep .keep files
+!.keep
