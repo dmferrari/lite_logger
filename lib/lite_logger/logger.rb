@@ -39,7 +39,7 @@ module LiteLogger
 
     def write_log(message)
       case @destination
-      when $stdout, $stderr, StringIO
+      when $stdout, $stderr
         @destination.puts message
       else
         File.open(@destination, 'a') { |file| file.puts message }
