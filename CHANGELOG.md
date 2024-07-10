@@ -22,3 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.3] - 2024-06-12
 
 - Added missing log/ directory that was causing the specs to fail.
+
+## [0.1.4] - 2024-07-09
+
+- Remove duplicated call to `Time.now`
