@@ -28,11 +28,12 @@ module LiteLogger
     end
 
     def format_message(level, message)
+      current_time = Time.now
       case @format
       when :json
-        { level: level, message: message, timestamp: Time.now }.to_json
+        { level: level, message: message, timestamp: current_time }.to_json
       else
-        "#{Time.now} [#{level.upcase}] #{message}"
+        "#{current_time} [#{level.upcase}] #{message}"
       end
     end
 
