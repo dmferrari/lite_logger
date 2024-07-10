@@ -30,7 +30,7 @@ gem install lite_logger
 
 ### Example
 
-In a Ruby class:
+#### In a Ruby class:
 
 ```ruby
 # Require the gem
@@ -52,6 +52,22 @@ class MyClass
     # Method logic here
   end
 end
+```
+
+#### Logging to a file
+
+```ruby
+require 'lite_logger'
+
+@logger = LiteLogger::Logger.new
+@logger.destination = './application.log'
+@logger.info('Application started!')
+```
+
+Output:
+
+```
+2024-07-10 18:58:07 -0300 [INFO] Application started!
 ```
 
 ## Contributing
