@@ -31,3 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Bug fix: Remove uninitialized constant LiteLogger::Logger::StringIO
 - Readme updated with example on how to log to a file.
+
+## [0.1.6] - 2024-07-10
+
+- Bug fix: Include the intended fix that was missing on the previous version
