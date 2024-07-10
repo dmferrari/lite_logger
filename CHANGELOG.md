@@ -26,3 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.4] - 2024-07-09
 
 - Remove duplicated call to `Time.now`
+
+## [0.1.5] - 2024-07-10
+
+- Bug fix: Remove uninitialized constant LiteLogger::Logger::StringIO
+- Readme updated with example on how to log to a file.
