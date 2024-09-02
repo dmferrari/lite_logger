@@ -39,7 +39,7 @@ require 'lite_logger'
 class MyClass
   def initialize
     # Initialize the logger
-    @logger = LiteLogger.new
+    @logger = LiteLogger::Logger.new
   end
 
   def run
