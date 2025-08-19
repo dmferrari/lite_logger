@@ -35,3 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.6] - 2024-07-10
 
 - Bug fix: Include the intended fix that was missing on the previous version
+
+## [0.1.7] - 2025-08-19
+
+- Small text fix in README.md
+- Remove unused file `all_changes.txt`
