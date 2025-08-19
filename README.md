@@ -49,7 +49,7 @@ class MyClass
     @logger.error('This is an error message')
     @logger.fatal('This is a fatal message')
 
-    # Method logic here
+    # [...]
   end
 end
 ```
@@ -76,5 +76,4 @@ Bug reports and pull requests are welcome: <https://github.com/dmferrari/lite_lo
 
 ## License
 
-License
 This little gem is available as open-source under the terms of the MIT License (see the LICENSE file in the project root for details).
