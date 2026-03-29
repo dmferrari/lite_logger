@@ -1,15 +1,19 @@
 # frozen_string_literal: true
 
+require 'fileutils'
+require 'json'
+
 module LiteLogger
   class Logger
     LEVELS = { debug: 0, info: 1, warn: 2, error: 3, fatal: 4 }.freeze
 
-    attr_accessor :level, :format, :destination
+    attr_accessor :level, :format, :destination, :formatter
 
     def initialize
       @level = :info
       @format = :plain
       @destination = $stdout
+      @formatter = nil
     end
 
     LEVELS.each_key do |level_name|
@@ -29,6 +33,8 @@ module LiteLogger
 
     def format_message(level, message)
       current_time = Time.now
+      return @formatter.call(level, message, current_time) if @formatter
+
       case @format
       when :json
         { level: level, message: message, timestamp: current_time }.to_json
@@ -41,7 +47,10 @@ module LiteLogger
       case @destination
       when $stdout, $stderr
         @destination.puts message
+      when ->(destination) { destination.respond_to?(:puts) }
+        @destination.puts message
       else
+        FileUtils.mkdir_p(File.dirname(@destination))
         File.open(@destination, 'a') { |file| file.puts message }
       end
     end

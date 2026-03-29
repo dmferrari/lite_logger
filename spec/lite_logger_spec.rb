@@ -18,6 +18,10 @@ RSpec.describe LiteLogger::Logger do # rubocop:disable Metrics/BlockLength
     it 'sets the default destination to $stdout' do
       expect(logger.destination).to eq($stdout)
     end
+
+    it 'defaults the formatter to nil' do
+      expect(logger.formatter).to be_nil
+    end
   end
 
   describe '#level=' do
@@ -31,6 +35,16 @@ RSpec.describe LiteLogger::Logger do # rubocop:disable Metrics/BlockLength
     it 'sets the log format' do
       logger.format = :json
       expect(logger.format).to eq(:json)
+    end
+  end
+
+  describe '#formatter=' do
+    it 'sets a custom formatter' do
+      formatter = ->(level, message, time) { "#{time} #{level} #{message}" }
+
+      logger.formatter = formatter
+
+      expect(logger.formatter).to eq(formatter)
     end
   end
 
@@ -101,6 +115,18 @@ RSpec.describe LiteLogger::Logger do # rubocop:disable Metrics/BlockLength
         expect(json).to have_key('timestamp')
       end
     end
+
+    context 'when a custom formatter is configured' do
+      it 'uses the formatter result' do
+        logger.formatter = lambda do |level, message, time|
+          "#{time.iso8601}|#{level}|#{message}"
+        end
+
+        formatted_message = logger.send(:format_message, :info, 'custom message')
+
+        expect(formatted_message).to match(/\d{4}-\d{2}-\d{2}T.*\|info\|custom message/)
+      end
+    end
   end
 
   describe '#write_log' do
@@ -123,6 +149,16 @@ RSpec.describe LiteLogger::Logger do # rubocop:disable Metrics/BlockLength
         logger.send(:write_log, 'File log message')
         expect(File.read(file_path)).to include('File log message')
         File.delete(file_path)
+      end
+
+      it 'creates the destination directory when needed' do
+        file_path = 'tmp/log/test.log'
+        logger.destination = file_path
+
+        logger.send(:write_log, 'File log message')
+
+        expect(File.read(file_path)).to include('File log message')
+        FileUtils.rm_rf('tmp')
       end
     end
   end

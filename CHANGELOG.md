@@ -40,3 +40,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Small text fix in README.md
 - Remove unused file `all_changes.txt`
+
+## [0.1.8] - 2026-03-29
+
+- Add optional custom formatter support for application-specific log output.
+- Create parent directories automatically when logging to a file destination.
+- Move development tools out of runtime dependencies.
