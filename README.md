@@ -28,17 +28,15 @@ gem install lite_logger
 
 ## Usage
 
-### Example
+### Basic example
 
-#### In a Ruby class:
+In a Ruby class:
 
 ```ruby
-# Require the gem
 require 'lite_logger'
 
 class MyClass
   def initialize
-    # Initialize the logger
     @logger = LiteLogger::Logger.new
   end
 
@@ -49,25 +47,72 @@ class MyClass
     @logger.error('This is an error message')
     @logger.fatal('This is a fatal message')
 
-    # [...]
   end
 end
 ```
 
-#### Logging to a file
+### Logging to a file
 
 ```ruby
 require 'lite_logger'
 
-@logger = LiteLogger::Logger.new
-@logger.destination = './application.log'
-@logger.info('Application started!')
+logger = LiteLogger::Logger.new
+logger.destination = './log/application.log'
+logger.info('Application started!')
 ```
 
 Output:
 
 ```
 2024-07-10 18:58:07 -0300 [INFO] Application started!
+```
+
+Parent directories are created automatically when the destination is a file path.
+
+### JSON output
+
+```ruby
+require 'lite_logger'
+
+logger = LiteLogger::Logger.new
+logger.format = :json
+logger.info('Application started!')
+```
+
+Example output:
+
+```json
+{"level":"info","message":"Application started!","timestamp":"2026-03-29 21:00:00 -0300"}
+```
+
+### Custom formatter
+
+Use `formatter` when you need full control over the rendered log line.
+
+```ruby
+require 'lite_logger'
+require 'time'
+
+logger = LiteLogger::Logger.new
+logger.destination = './log/custom.log'
+logger.formatter = lambda do |level, message, time|
+  "[#{time.iso8601}] #{level.upcase}: #{message}"
+end
+
+logger.info('Application started!')
+```
+
+### Global configuration
+
+```ruby
+require 'lite_logger'
+
+LiteLogger.configure do |logger|
+  logger.level = :debug
+  logger.destination = './log/application.log'
+end
+
+LiteLogger.logger.info('Application started!')
 ```
 
 ## Contributing

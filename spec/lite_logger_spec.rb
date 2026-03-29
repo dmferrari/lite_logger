@@ -2,6 +2,40 @@
 
 require 'spec_helper'
 require 'json'
+require 'time'
+
+RSpec.describe LiteLogger do
+  describe '.configure' do
+    around do |example|
+      original_logger = described_class.logger
+      described_class.logger = nil
+      example.run
+    ensure
+      described_class.logger = original_logger
+    end
+
+    it 'yields a logger instance and stores it globally' do
+      yielded_logger = nil
+
+      described_class.configure do |logger|
+        yielded_logger = logger
+      end
+
+      expect(yielded_logger).to be_a(LiteLogger::Logger)
+      expect(described_class.logger).to equal(yielded_logger)
+    end
+
+    it 'reuses the same logger across configure calls' do
+      first_logger = nil
+      second_logger = nil
+
+      described_class.configure { |logger| first_logger = logger }
+      described_class.configure { |logger| second_logger = logger }
+
+      expect(second_logger).to equal(first_logger)
+    end
+  end
+end
 
 RSpec.describe LiteLogger::Logger do # rubocop:disable Metrics/BlockLength
   let(:logger) { described_class.new }
@@ -112,7 +146,7 @@ RSpec.describe LiteLogger::Logger do # rubocop:disable Metrics/BlockLength
         json = JSON.parse(formatted_message)
         expect(json['level']).to eq('info')
         expect(json['message']).to eq('json message')
-        expect(json).to have_key('timestamp')
+        expect(Time.parse(json['timestamp'])).to be_a(Time)
       end
     end
 
@@ -125,6 +159,16 @@ RSpec.describe LiteLogger::Logger do # rubocop:disable Metrics/BlockLength
         formatted_message = logger.send(:format_message, :info, 'custom message')
 
         expect(formatted_message).to match(/\d{4}-\d{2}-\d{2}T.*\|info\|custom message/)
+      end
+
+      it 'bubbles up formatter errors' do
+        logger.formatter = lambda do |_level, _message, _time|
+          raise ArgumentError, 'bad formatter'
+        end
+
+        expect do
+          logger.send(:format_message, :info, 'custom message')
+        end.to raise_error(ArgumentError, 'bad formatter')
       end
     end
   end
@@ -158,6 +202,20 @@ RSpec.describe LiteLogger::Logger do # rubocop:disable Metrics/BlockLength
         logger.send(:write_log, 'File log message')
 
         expect(File.read(file_path)).to include('File log message')
+        FileUtils.rm_rf('tmp')
+      end
+
+      it 'appends multiple writes instead of replacing the file' do
+        file_path = 'tmp/log/append.log'
+        logger.destination = file_path
+
+        logger.send(:write_log, 'First log message')
+        logger.send(:write_log, 'Second log message')
+
+        expect(File.readlines(file_path, chomp: true)).to eq([
+                                                               'First log message',
+                                                               'Second log message'
+                                                             ])
         FileUtils.rm_rf('tmp')
       end
     end

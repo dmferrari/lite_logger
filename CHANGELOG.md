@@ -46,3 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add optional custom formatter support for application-specific log output.
 - Create parent directories automatically when logging to a file destination.
 - Move development tools out of runtime dependencies.
+
+## [0.1.9] - 2026-03-29
+
+- Expand the spec suite around global configuration, formatter errors, JSON timestamps, and append behavior.
+- Refresh the README with examples for file logging, JSON output, custom formatters, and global configuration.
