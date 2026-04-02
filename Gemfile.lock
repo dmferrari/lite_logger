@@ -23,7 +23,7 @@ GEM
     rbs (3.6.1)
       logger
     regexp_parser (2.9.2)
-    rexml (3.3.9)
+    rexml (3.4.2)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
